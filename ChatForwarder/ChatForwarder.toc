@@ -1,0 +1,10 @@
+## Interface: 20400
+## Title: Chat Forwarder
+## Notes: Allows player to redirect selected chat channels to other player.
+## Author: Siarkowy
+## Version: 1.0
+## SavedVariables: ChatForwarderDB
+
+core.lua
+channels.lua
+slash.lua
