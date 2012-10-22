@@ -307,7 +307,7 @@ function ChatForwarder:START_LOOT_ROLL(rollid, rolltime)
     local texture, name, count, quality, bop = GetLootRollItemInfo(rollid)
     local link = GetLootRollItemLink(rollid)
 
-    self:Comm(outgoing, "L", rollid, texture, link, count, bop or 0)
+    self:Comm(outgoing, "L", rollid, strsub(texture, 17), link, count, bop or 0)
 end
 
 --- Valid channel list for @commands.
@@ -414,21 +414,21 @@ end
 
 function ChatForwarder:HandleComm(sender, type, ...)
     if sender == incoming then -- incoming comms
-        if COMM2EVENT[type] then
-            local msg, author, channel = ...
-            self:Message(sender, type, COMM2EVENT[type], msg, author, channel)
-
-        elseif type == "L" then -- loot offer
+        if type == "L" then -- loot offer
             local rollid, texture, link, count, bop = ...
 
             count = tonumber(count) or 1
             bop = tonumber(bop) or 0
 
-            local msg = ("|T%s:16:16:0:-2|t%s%s%s %s"):
+            local msg = ("|TInterface\\Icons\\%s:16:16:0:-2|t%s%s%s %s"):
                 format(texture, link, bop > 0 and "[BoP]" or "", count > 1 and
                 ("x%d"):format(count) or "", self:GetNeedGreedPassLinks(rollid))
 
             self:Message(sender, type, COMM2EVENT[type], msg)
+
+        elseif COMM2EVENT[type] then
+            local msg, author, channel = ...
+            self:Message(sender, type, COMM2EVENT[type], msg, author, channel)
 
         elseif type == "CON" and select(1, ...) == "C" then
             self:CloseIn()

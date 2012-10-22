@@ -2,7 +2,7 @@
 ## Title: Chat Forwarder
 ## Notes: Allows player to redirect selected chat channels to other player.
 ## Author: Siarkowy
-## Version: 1.0
+## Version: 1.0.1
 ## SavedVariables: ChatForwarderDB
 
 core.lua
